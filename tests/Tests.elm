@@ -4,8 +4,10 @@ import Test exposing (..)
 import Expect
 import Fuzz exposing (list, int, tuple, string)
 import String
+import Main2 exposing(..)
 
-
+m:Model
+m = {entries = [], results = [], filter = ""}
 all : Test
 all =
     describe "Sample Test Suite"
@@ -16,5 +18,9 @@ all =
             , test "String.left" <|
                 \() ->
                     Expect.equal "a" (String.left 1 "abcdefg")
+            , test "This test should fail - you should remove it" <|
+                \_ ->
+
+                    Expect.equal " " " "
             ]
         ]
