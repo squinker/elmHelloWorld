@@ -36,9 +36,7 @@ put url body =
         }
 
 
-type Msg
-        = Filter String
-        | Add
+type Msg = GetFnordApiResult (Result Http.Error String)
 
 
 
@@ -48,13 +46,9 @@ type Msg
 update : Msg -> Model -> Model
 update msg model =
     case msg of
-        Filter filter ->
-            { model
-                | results = List.filter (String.contains filter) model.entries
-                , filter = filter
-            }
 
-        Add ->
+
+        GetFnordApiResult (Ok book) ->
             { model
                 | entries = model.filter :: model.entries
                 , results = model.filter :: model.results
@@ -63,10 +57,7 @@ update msg model =
 view : Model -> Html Msg
 view model =
     div []
-        [ input [ placeholder "Filter…", onInput Filter ] []
-        , button [ onClick Add ] [ text "Send request to " ]
-        , ul [] (List.map viewEntry model.results)
-        ]
+        [ button [ onClick GetFnordApiResult ] [ text "Send request to " ]]
 
 viewEntry : String -> Html Msg
 viewEntry entry =
